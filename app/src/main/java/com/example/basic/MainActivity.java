@@ -2,6 +2,7 @@ package com.example.basic;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,9 +14,10 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import java.time.Duration;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
-    public Button button, clearButton;
+    public Button button, clearButton,datePickerButton;
     public EditText name, email, about, password;
     public RadioGroup gender;
     public RadioButton male, female, other;
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         javaCheckBox = findViewById(R.id.javaCheckBox);
         pythonCheckBox = findViewById(R.id.pythonCheckBox);
         androidCheckBox = findViewById(R.id.androidCheckBox);
+        datePickerButton = findViewById(R.id.pick_date_button);
 
 
     }
@@ -61,6 +64,18 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this,"Hello The button is pressed wit outside a function",Toast.LENGTH_SHORT).show();
         });
          */
+        datePickerButton.setOnClickListener(v -> {
+            Calendar calendar = Calendar.getInstance();
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+            DatePickerDialog datePickerDialog = new DatePickerDialog(
+                    this,(view, selectedYear, selectedMonth, selectedDay) -> {
+                        Toast.makeText(getApplicationContext(),"selected month $selectedMonth",Toast.LENGTH_LONG).show();
+            },year,month,day
+            );
+            datePickerDialog.show();
+        });
 
         button.setOnClickListener
                 (v -> {
