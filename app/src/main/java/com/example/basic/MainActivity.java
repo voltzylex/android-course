@@ -6,22 +6,29 @@ import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.time.Duration;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
-    public Button button, clearButton,datePickerButton;
-    public EditText name, email, about, password;
+    public Button button, clearButton;
+    public EditText name, email, about, password,datePickerField;
     public RadioGroup gender;
     public RadioButton male, female, other;
     public CheckBox javaCheckBox, pythonCheckBox, androidCheckBox;
+    public Spinner countrySpinner;
+    public String contryArray[] = {
+            "India","America","Japan","UK","Pakistan","Russia"
+    };
+
 
     private void initializeViews() {
         button = findViewById(R.id.sign_up_button);
@@ -37,7 +44,8 @@ public class MainActivity extends AppCompatActivity {
         javaCheckBox = findViewById(R.id.javaCheckBox);
         pythonCheckBox = findViewById(R.id.pythonCheckBox);
         androidCheckBox = findViewById(R.id.androidCheckBox);
-        datePickerButton = findViewById(R.id.pick_date_button);
+        datePickerField = findViewById(R.id.pick_date_button);
+        countrySpinner = findViewById(R.id.country_spinner);
 
 
     }
@@ -64,14 +72,15 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this,"Hello The button is pressed wit outside a function",Toast.LENGTH_SHORT).show();
         });
          */
-        datePickerButton.setOnClickListener(v -> {
+        datePickerField.setOnClickListener(v -> {
             Calendar calendar = Calendar.getInstance();
             int year = calendar.get(Calendar.YEAR);
             int month = calendar.get(Calendar.MONTH);
             int day = calendar.get(Calendar.DAY_OF_MONTH);
             DatePickerDialog datePickerDialog = new DatePickerDialog(
                     this,(view, selectedYear, selectedMonth, selectedDay) -> {
-                        Toast.makeText(getApplicationContext(),"selected month $selectedMonth",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),"selected month "+selectedMonth,Toast.LENGTH_LONG).show();
+                        datePickerField.setText(String.valueOf(selectedDay)+"/"+String.valueOf(selectedMonth)+"/"+String.valueOf(selectedYear));
             },year,month,day
             );
             datePickerDialog.show();
@@ -116,5 +125,14 @@ public class MainActivity extends AppCompatActivity {
 
                 });
 
+//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+//                this,
+//                R.array.spinner_items,
+//                android.R.layout.simple_spinner_item
+//        );
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        countrySpinner.setAdapter(adapter);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,contryArray);
+        countrySpinner.setAdapter(adapter);
     }
 }
