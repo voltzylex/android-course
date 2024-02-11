@@ -15,7 +15,12 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.basic.adapter.Country;
+import com.example.basic.adapter.CountryAdapter;
+
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,8 +30,12 @@ public class MainActivity extends AppCompatActivity {
     public RadioButton male, female, other;
     public CheckBox javaCheckBox, pythonCheckBox, androidCheckBox;
     public Spinner countrySpinner;
-    public String contryArray[] = {
-            "India","America","Japan","UK","Pakistan","Russia"
+    public Country contryArray[] = new Country[]{
+            new Country(1, "India", "This is the first country"),
+            new Country(2, "Pakistan", "This is the second country"),
+            new Country(3, "China", "This is the third country"),
+
+//            "India","America","Japan","UK","Pakistan","Russia"
     };
 
 
@@ -132,7 +141,10 @@ public class MainActivity extends AppCompatActivity {
 //        );
 //        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 //        countrySpinner.setAdapter(adapter);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,contryArray);
-        countrySpinner.setAdapter(adapter);
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,contryArray);
+        CountryAdapter countryAdapter = new CountryAdapter(Arrays.asList(contryArray),this);
+
+        countrySpinner.setAdapter(countryAdapter);
+
     }
 }
